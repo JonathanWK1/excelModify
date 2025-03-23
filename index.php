@@ -6,7 +6,16 @@
     <title>Excel Comparer</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body class="container mt-5">
+    <!-- Bootstrap Loading Spinner -->
+    <div style="z-index: 1" id="loadingScreen" class="d-none position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-75 d-flex justify-content-center align-items-center">
+        <div class="text-center">
+            <div class="spinner-border text-light" role="status" style="width: 4rem; height: 4rem;"></div>
+            <h4 class="text-light mt-3">Processing...</h4>
+        </div>
+    </div>
+    
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Excel Comparer and separator</a>
@@ -50,12 +59,13 @@
             <button type="submit" class="btn btn-primary w-100">Process Files</button>
         </form>
         <div class="text-center mt-3">
-            <a id="downloadLink" href="/php/download_zip.php" class="btn btn-success" style="display: none;" download>Download Processed File</a>
+            <a id="downloadLink" href="#" class="btn btn-success" style="display: none;" download>Download Processed File</a>
         </div>
     </div>
     
     <script>
         document.getElementById("uploadForm").addEventListener("submit", function(event) {
+            document.getElementById("loadingScreen").classList.remove("d-none"); // Hide on error
             event.preventDefault();
             let formData = new FormData();
             formData.append("file1", document.getElementById("file1").files[0]);
@@ -69,14 +79,18 @@
             })
             .then(response => response.json())
             .then(data => {
+                document.getElementById("loadingScreen").classList.add("d-none"); // Hide on error
                 if (data.download) {
-                    downloadLink.href = data.download;
+                    downloadLink.href = "/php/download_zip.php?file=comparer/" + data.download;
                     downloadLink.style.display = 'inline-block';
                     downloadLink.textContent = "Download Processed File";
                     alert("Success! Your file is ready to download.");
                 }
             })
-            .catch(error => console.error("Error:", error));
+            .catch(error => {
+                document.getElementById("loadingScreen").classList.add("d-none"); // Hide on error
+                console.error("Error:", error);
+            });
         });
     </script>
     

@@ -1,7 +1,7 @@
 <?php
 // $zipFileName = "Retur_Files.zip";
-$zipFileName = isset($_GET['file']) ? basename($_GET['file']) : null;
-$outputPath = __DIR__ . "/../output/separator/" . $zipFileName;
+$fileName = isset($_GET['file']) ? $_GET['file'] : null;
+$outputPath = __DIR__ . "/../output/" . $fileName;
 
 // Check if the file exists before downloading
 if (!file_exists($outputPath)) {
@@ -10,7 +10,7 @@ if (!file_exists($outputPath)) {
 
 // Send the file as a download
 header('Content-Type: application/zip');
-header('Content-Disposition: attachment; filename="' . $zipFileName . '"');
+header('Content-Disposition: attachment; filename="' . basename($fileName) . '"');
 header('Content-Length: ' . filesize($outputPath));
 readfile($outputPath);
 exit;

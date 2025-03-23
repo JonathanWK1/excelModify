@@ -166,5 +166,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Return JSON response with download link
 
     header('Content-Type: application/json');
-    echo json_encode(['download' => $outputFile]);
+    echo json_encode(['download' => basename($outputFile)]);
 }
