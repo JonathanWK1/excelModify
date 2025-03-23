@@ -59,7 +59,7 @@
             <button type="submit" class="btn btn-primary w-100">Process Files</button>
         </form>
         <div class="text-center mt-3">
-            <a id="downloadLink" href="#" class="btn btn-success" style="display: none;" download>Download Processed File</a>
+            <a id="downloadLink" href="#" class="btn btn-success" style="display: none;">Download Processed File</a>
         </div>
     </div>
     
@@ -81,6 +81,7 @@
             .then(data => {
                 document.getElementById("loadingScreen").classList.add("d-none"); // Hide on error
                 if (data.download) {
+                    downloadLink.setAttribute("download", ""); 
                     downloadLink.href = "/php/download_zip.php?file=comparer/" + data.download;
                     downloadLink.style.display = 'inline-block';
                     downloadLink.textContent = "Download Processed File";

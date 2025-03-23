@@ -54,7 +54,7 @@
             <button type="submit" class="btn btn-primary w-100">Process Files</button>
         </form>
         <div class="text-center mt-3">
-            <a id="downloadLink" class="btn btn-success" style="display: none;" download>Download Processed File</a>
+            <a id="downloadLink" class="btn btn-success" style="display: none;">Download Processed File</a>
         </div>
     </div>
     
@@ -86,6 +86,7 @@
                 document.getElementById("loadingScreen").classList.add("d-none"); // Hide on error
                 if (data.download) {
                     let downloadLink = document.getElementById('downloadLink');
+                    downloadLink.setAttribute("download", ""); 
                     downloadLink.href = "/php/download_zip.php?file=separator/" + data.download;
                     downloadLink.style.display = 'inline-block';
                     downloadLink.textContent = "Download Processed File";
